@@ -39,7 +39,7 @@ class AuthenticateController extends Controller
         $user->sex = $request->get('sex');
         $user->phoneNumber = $request->get('phoneNumber');
         $user->dateOfBirth = $request->get('dateOfBirth');
-        $user->slug =  str_slug($request->get('name')." ".rand(10000,900000)." ".rand(10000,900000)." ".rand(10000,900000));
+        $user->slug =  str_slug($request->get('firstName')."-".$request->get('lastName')."-".rand(10000,900000)."-".rand(10000,900000));
         $user->password = bcrypt($request->get('password')) ;
 
         $user->save();
@@ -79,7 +79,7 @@ class AuthenticateController extends Controller
                 return response()->json([
                     'error' => 'Invalid Credentials',
                     "meta" => [
-                        "status" =>  "INVALID_CREDENTIALS"
+                        "auth_status" =>  "INVALID_CREDENTIALS"
                     ]
                 ],
                     401);
@@ -93,7 +93,7 @@ class AuthenticateController extends Controller
                 [
                     'error' => 'Error when trying to create a token',
                     "meta" => [
-                        "status" =>  "COULD_NOT_CREATE_TOKEN"
+                        "auth_status" =>  "COULD_NOT_CREATE_TOKEN"
                     ]
                 ],
                 500);
@@ -114,12 +114,13 @@ class AuthenticateController extends Controller
                     'refresher_exp' => $refreshTokenExpiry
                 ],
                 'user' => [
-                    'name' => $user->name,
+                    'firstName' => $user->firstName,
+                    'lastName' => $user->lastName,
                     'email' => $user->email,
                     'slug' => $user->slug
                 ],
                 "meta" => [
-                    "status" =>  "TOKEN_GENERATED"
+                    "auth_status" =>  "TOKEN_GENERATED"
                 ]
             ],
             200
