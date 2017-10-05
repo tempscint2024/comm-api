@@ -11,6 +11,8 @@ Route::group(['prefix' => 'v1'], function () {
 
     Route::group(['prefix' => 'productCategories'], function () {
 
+        Route::get('/', 'api\v1\ProductCategoryController@getAllProductCategories');
+
         Route::get('topLevelCategories', 'api\v1\ProductCategoryController@getTopLevelProductCategories');
 
     });

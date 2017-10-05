@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\Validator;
 use Tymon\JWTAuth\Exceptions\JWTException;
 use Tymon\JWTAuth\Facades\JWTAuth;
 
-class AuthenticateController extends Controller
+class AuthenticateController extends ApiBaseController
 {
     public function registerUser (Request $request) {
 

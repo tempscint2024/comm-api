@@ -16,7 +16,7 @@ class CreateProductCategoriesTable extends Migration
         Schema::create('product_categories', function (Blueprint $table) {
             $table->increments('id');
             $table->string('path')->unique();
-            $table->string('parent')->nullable();
+            $table->string('parent')->nullable(); // Used to easily get to top level product categories, avoid costly pattern match test on path to get most top level nodes
             $table->string('name')->unique();
             $table->text('description');
             $table->string('icon')->nullable();
